@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/<your-username>/cicd-practice.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                  echo "Building Docker image..."
+                  docker build -t cicd-app .
+                '''
+            }
+        }
+
+        stage('Run Tests in Docker') {
+            steps {
+                sh '''
+                  echo "Running tests inside Docker..."
+                  docker run --rm cicd-app python -m pytest
+                '''
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                sh '''
+                  echo "Deploying Docker container..."
+                  docker run -d --name cicd-container cicd-app
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Cleaning up old containers"
+            sh 'docker rm -f cicd-container || true'
+        }
+    }
+}
