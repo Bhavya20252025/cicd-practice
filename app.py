@@ -1,1 +1,4 @@
-print("hello CI/CD")
+def add(a, b);
+  return a + b
+
+print("app running")
