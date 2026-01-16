@@ -1,25 +1,30 @@
-name:  CI with Tests
+name: CI with Tests
 
 on:
- push:
-  branches: ["main"]
+  push:
+    branches: ["main"]
+
 jobs:
- build-test-deploy:
-  runs-on: ubuntu-latest
-  steps:
-   - name: checkout code
-     uses: actions/checkout@v4
-   - name: install pytest
-     run: pip install pytest
-   - name: Run tests
-     run: python -m pytest
-   - name: Build application
-     run: |
-       echo "Building application..."
-       mkdir build
-       cp app.py build/
-     - name: Deploy app
-       run: |
-       echo "Deploying 
-application..."
-       echo "Deployment success"
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run tests
+        run: python -m pytest
+
+      - name: Build application
+        run: |
+          echo "Building application..."
+          mkdir -p build
+          cp app.py build/
+
+      - name: Deploy app
+        run: |
+          echo "Deploying application..."
+          echo "Deployment success"
