@@ -4,7 +4,7 @@ on:
  push:
   branches: ["main"]
 jobs:
- test:
+ build-test-deploy:
   runs-on: ubuntu-latest
   steps:
    - name: checkout code
@@ -13,3 +13,13 @@ jobs:
      run: pip install pytest
    - name: Run tests
      run: python -m pytest
+   - name: Build application
+     run: |
+       echo "Building application..."
+       mkdir build
+       cp app.py build/
+     - name: Deploy app
+       run: |
+       echo "Deploying 
+application..."
+       echo "Deployment success"
